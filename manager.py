@@ -1,10 +1,14 @@
 import firebase_admin
 from firebase_admin import credentials, db
+import os
 
 import json
 from dotenv import dotenv_values
 
 env_vars = dotenv_values(".env")
+if not EnvironmentError:
+    env_vars = os.environ.get('CRED')
+    
 cred_json_string = env_vars.get("CRED")
 
 cred_dict = json.loads(cred_json_string)
