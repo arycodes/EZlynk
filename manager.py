@@ -8,7 +8,6 @@ env_vars = dotenv_values(".env")
 cred = env_vars.get("CRED")
 if not cred:
     cred = os.environ.get("CRED")
-    print("tjos os cred"  , cred)
     cred = cred.replace('\n', '\\n')
 cred_dict = json.loads(cred)
 
