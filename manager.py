@@ -3,7 +3,6 @@ from firebase_admin import credentials, db
 import json
 import os
 
-
 from dotenv import dotenv_values
 env_vars = dotenv_values(".env")
 cred = env_vars.get("CRED")
