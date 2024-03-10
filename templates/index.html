@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ezlynk - Shorten Your Links</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #007bff;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .github-icon {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 400px;
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        select,
+        option {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .msg {
+            width: 100%;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        EZlynk - Shorten Your Links
+        <i class="fab fa-github github-icon"></i>
+    </header>
+    <div class="container">
+        <form action="/" method="post">
+            <label for="url">Enter Your Link Here</label>
+            <input type="text" name="url" id="url" placeholder="Enter your URL" required>
+            <p class="msg error" id="errorurl">Please enter a valid URL</p>
+            <br>
+            <label for="urltype">Select The Type of link</label>
+            <select name="urltype" id="urltype">
+                <option value="random" selected>Random</option>
+                <option value="custom">Custom</option>
+            </select>
+            <label for="customurl" class="customurloption hide">Customize Your Short URL</label>
+            <input type="text" class="customurloption hide" id="editableInput" value="ezlynk.vercel.app/" name="editableInput">
+            <span id="availability"></span><br>
+            <input type="submit" value="Shorten" id="shortenbutton">
+        </form>
+    </div>
+
+
+    <script>
+        document.getElementById("shortenbutton").addEventListener("click", () => {
+            console.log("clicked");
+        });
+
+        document.getElementById("editableInput").addEventListener("input", function (event) {
+            prefix = "ezlynk.vercel.app//"
+            var inputValue = event.target.value.slice(prefix.length);
+            var pattern = /^[a-zA-Z0-9]*$/;
+            if (!pattern.test(inputValue)) {
+                alert("no special character allowed")
+                event.target.value = inputValue.replace(/[^a-zA-Z0-9]/g, '');
+            }
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var inputField = document.getElementById('editableInput');
+            var initialValue = inputField.value;
+
+            inputField.addEventListener('input', function (event) {
+                var currentValue = event.target.value;
+
+                if (!currentValue.startsWith(initialValue)) {
+                    event.target.value = initialValue;
+                }
+            });
+
+
+
+
+            document.getElementById("urltype").addEventListener("input", () => {
+                if (document.getElementById("urltype").value === "custom") {
+                    elements = document.querySelectorAll(".customurloption")
+                    elements.forEach(element => {
+                        element.classList.remove("hide")
+
+                    });
+                    document.getElementById("shortenbutton").disabled = true;
+                }
+                else {
+                    elements = document.querySelectorAll(".customurloption")
+
+                    elements.forEach(element => {
+                        element.classList.add("hide")
+
+
+                    });
+                    document.getElementById("shortenbutton").disabled = false;
+
+                    inputField.value = initialValue
+
+                }
+            })
+
+
+        });
+
+    </script>
+
+
+    <script>
+        var inputField = document.getElementById('url');
+        var errorElement = document.getElementById("errorurl");
+
+        errorElement.style.display = 'none';
+
+        inputField.addEventListener('input', function (event) {
+            var url = event.target.value;
+            var urlPattern = /^(http|https):\/\/[^ "]+$/;
+
+            if (!url.match(urlPattern)) {
+                errorElement.style.display = 'block';
+                document.getElementById("shortenbutton").disabled = true;
+
+            } else {
+                errorElement.style.display = 'none';
+                document.getElementById("shortenbutton").disabled = false;
+
+            }
+        });
+    </script>
+
+    <script>
+        const routeInput = document.getElementById('editableInput');
+        const availabilitySpan = document.getElementById('availability');
+
+        routeInput.addEventListener('input', function () {
+            var route = routeInput.value.trim();
+            const prefix = 'ezlynk.vercel.app/';
+            route = route.slice(prefix.length);
+
+            document.getElementById("shortenbutton").disabled = true;
+            if (route.length === 0) {
+                availabilitySpan.textContent = 'enter a valid url';
+                availabilitySpan.style.color = 'orange';
+                return;
+
+
+            }
+
+            else {
+                availabilitySpan.textContent = 'enter a valid url';
+                availabilitySpan.style.color = 'red';
+                fetch('/check_route', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'route=' + encodeURIComponent(route)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.available) {
+                            availabilitySpan.textContent = 'Route is available';
+                            availabilitySpan.style.color = 'green';
+                            document.getElementById("shortenbutton").disabled = false;
+
+                        } else {
+                            availabilitySpan.textContent = 'Route is not available';
+                            availabilitySpan.style.color = 'red';
+                            document.getElementById("shortenbutton").disabled = true;
+
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>

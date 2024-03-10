@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #link-container {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        #link-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #copy-button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EZlink url Shortener</h1>
+    <div id="link-container">
+        <p>Your original link: <a href="{{ original_link }}" target="_blank">{{ original_link }}</a></p>
+        <p>Your shortened link: <a href="{{ shortened_link }}" target="_blank">{{ shortened_link }}</a></p>
+        <button id="copy-button">Copy Shortened Link</button>
+    </div>
+
+    <script>
+        document.getElementById('copy-button').addEventListener('click', function() {
+            var linkInput = document.createElement('input');
+            document.body.appendChild(linkInput);
+            linkInput.value = "{{ shortened_link }}";
+            linkInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(linkInput);
+            alert('Shortened link copied to clipboard!');
+        });
+    </script>
+</body>
+</html>
