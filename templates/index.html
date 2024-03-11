@@ -4,8 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ezlynk - Shorten Your Links</title>
-    <!-- Include Font Awesome CSS -->
+    <title>EZlynk - Shorten Your Links | URL Shortener Tool</title>
+    <meta name="description"
+        content="EZlynk is a URL shortener tool that helps you shorten your links easily. Shorten URLs and customize them according to your needs.">
+    <meta name="author" content="Aryan Mishra">
+    <meta name="author" content="AryCodes">
+    <meta name="keywords"
+        content="EZlynk, URL shortener, link shortener, shorten links, custom URL, URL optimization , arycodes , AryCdes , aryan">
+
+    <link rel="canonical" href="https://ezlynk.vercel.app.com/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         * {
@@ -31,6 +38,8 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
         }
 
         .github-icon {
@@ -106,7 +115,9 @@
 <body>
     <header>
         EZlynk - Shorten Your Links
-        <i class="fab fa-github github-icon"></i>
+        <a href="https://github.com/arycodes/EZlynk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"
+                style="font-size: 25px;color: #fff;"></i></a>
+
     </header>
     <div class="container">
         <form action="/" method="post">
@@ -120,7 +131,8 @@
                 <option value="custom">Custom</option>
             </select>
             <label for="customurl" class="customurloption hide">Customize Your Short URL</label>
-            <input type="text" class="customurloption hide" id="editableInput" value="ezlynk.vercel.app/" name="editableInput">
+            <input type="text" class="customurloption hide" id="editableInput" value="ezlynk.vercel.app/"
+                name="editableInput">
             <span id="availability"></span><br>
             <input type="submit" value="Shorten" id="shortenbutton">
         </form>
