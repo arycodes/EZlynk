@@ -1,13 +1,19 @@
-from flask import Flask , render_template , request , jsonify , redirect
+from flask import Flask , render_template , request , jsonify , redirect , send_from_directory
 import manager
 
 app = Flask(__name__)
 
 
 
+
+@app.route('/assets/logo.png')
+def get_logo():
+    return send_from_directory('static', 'logo_trans.png')
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 
 
